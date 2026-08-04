@@ -1,0 +1,12 @@
+{
+  "extends": "@workspace/typescript-config/react-library.json",
+  "compilerOptions": {
+    "module": "es2022",
+    "moduleResolution": "bundler",
+    "paths": {
+      "@workspace/ui-core/*": ["./src/*"]
+    }
+  },
+  "include": [".", "src/components/Auth"],
+  "exclude": ["node_modules", "dist"]
+}

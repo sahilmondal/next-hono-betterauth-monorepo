@@ -1,0 +1,16 @@
+{
+  "app": "ui",
+  "lastUpdatedDate": "2026-05-18",
+  "description": "React component library built on shadcn/ui and Tailwind CSS",
+  "changes": [
+    {
+      "date": "2026-05-18",
+      "agent": "system",
+      "type": "chore",
+      "description": "Initial SKILLS documentation created for AI agents",
+      "files": ["SKILLS.md"],
+      "skillsUpdated": true,
+      "notes": "Comprehensive documentation of component architecture, styling setup, component patterns, Tailwind configuration, accessibility, and development workflow"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "@workspace/ui-clients",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "description": "Shared API and Better Auth client connections",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings=0"
+  },
+  "dependencies": {
+    "better-auth": "^1.5.3",
+    "hono": "^4.12.21",
+    "hono-api": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@workspace/eslint-config": "workspace:*",
+    "@workspace/typescript-config": "workspace:*",
+    "eslint": "^9.39.2",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.0"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src/**"
+  ]
+}
