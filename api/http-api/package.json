@@ -16,6 +16,7 @@
   "dependencies": {
     "better-auth": "^1.6.11",
     "dotenv": "^17.4.2",
+    "drizzle-orm": "^0.40.0",
     "hono": "^4.12.21",
     "pino": "^8.21.0",
     "pino-pretty": "^10.3.1",

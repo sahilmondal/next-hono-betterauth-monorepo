@@ -6,8 +6,7 @@ import { logger } from "./config/logger";
 import { errorHandler } from "./middleware/error-handler";
 import { loggerMiddleware } from "./middleware/logger";
 import { rateLimitMiddleware } from "./middleware/rate-limit";
-import { db } from "@workspace/db";
-import { sql } from "drizzle-orm";
+import { db, sql } from "@workspace/db";
 import { auth } from "./lib/auth";
 import type { HonoContext } from "./types";
 import usersRoute from "./modules/users/users.route";
@@ -35,8 +34,9 @@ app.use(compress());
 app.use(
   cors({
     origin:
-      env?.FRONTEND_ORIGINS?.split(",").map((origin: string) => origin.trim()) ||
-      "http://localhost:3000",
+      env?.FRONTEND_ORIGINS?.split(",").map((origin: string) =>
+        origin.trim(),
+      ) || "http://localhost:3000",
     allowHeaders: ["Content-Type", "Authorization"],
     allowMethods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
     exposeHeaders: ["Content-Length"],
@@ -74,7 +74,6 @@ const routes = app
 app.on(["POST", "GET"], "/auth/*", (c) => auth.handler(c.req.raw));
 
 export type AppType = typeof routes;
-
 
 // 404 handler
 app.notFound((c) => {

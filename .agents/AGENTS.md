@@ -4,7 +4,7 @@
 
 - Component filenames: **kebab-case** (e.g. `login-form.tsx`, `signup-form.tsx`)
 - Component export functions: **PascalCase** (e.g. `export function LoginForm() {}`)
-- Routing filenames: **kebab-case** (e.g. `forgot-password.tsx`, `reset-password.tsx`)
+- Routing filenames: **kebab-case** (e.g. `forgot-password`, `reset-password`)
 - Database schemas: **kebab-case.schema.ts** (e.g. `auth.schema.ts`)
 - Configs & utilities: **kebab-case.ts** (e.g. `auth-client.ts`)
 
@@ -12,7 +12,8 @@
 
 - Use shared database package `@workspace/db` for backend services (Hono API, etc.).
 - Avoid direct database connection initializations inside backend services; import `db` from `@workspace/db` instead.
-- React App is a pure client-side SPA; it must not import `@workspace/db` or directly connect to the database.
+- Next.js App must not import `@workspace/db` or directly connect to the database.
+- All shadcn UI components must be imported directly from `@workspace/ui-core`.
 
 ## Full-Stack Type Safety Rules
 

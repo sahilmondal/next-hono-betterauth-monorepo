@@ -1,4 +1,5 @@
-import type { Context, StatusCode } from "hono";
+import type { Context } from "hono";
+import type { ContentfulStatusCode } from "hono/utils/http-status";
 import type { ApiResponse } from "../types";
 
 export function successResponse<T>(
@@ -30,7 +31,7 @@ export async function sendSuccess<T>(
   statusCode = 200,
 ) {
   return c.json(successResponse(data, message), {
-    status: statusCode as StatusCode,
+    status: statusCode as ContentfulStatusCode,
   });
 }
 
@@ -41,6 +42,6 @@ export async function sendError(
   statusCode = 400,
 ) {
   return c.json(errorResponse(error, code), {
-    status: statusCode as StatusCode,
+    status: statusCode as ContentfulStatusCode,
   });
 }

@@ -1,8 +1,8 @@
-# 🚀 React + Hono.js + Better Auth Monorepo Template
+# 🚀 Next.js + Hono.js + Better Auth Monorepo Template
 
-Welcome to the **React + Hono.js + Better Auth Monorepo Template**! This is a production-ready, highly-optimized, and full-stack monorepo designed for speed, developer experience, and end-to-end type safety.
+Welcome to the **Next.js + Hono.js + Better Auth Monorepo Template**! This is a production-ready, highly-optimized, and full-stack monorepo designed for speed, developer experience, and end-to-end type safety.
 
-Orchestrated using **Turborepo** and powered by **Bun**, this template brings together a blazing-fast **Hono.js** API, a modern **React 19 SPA** using **TanStack Router**, secure authentication via **Better Auth**, and type-safe database queries via **Drizzle ORM**.
+Orchestrated using **Turborepo** and powered by **Bun**, this template brings together a modern **Next.js 16** web application using **App Router**, a blazing-fast **Hono.js** API, secure authentication via **Better Auth**, shared UI components from `@workspace/ui-core`, and type-safe database queries via **Drizzle ORM**.
 
 ---
 
@@ -10,8 +10,8 @@ Orchestrated using **Turborepo** and powered by **Bun**, this template brings to
 
 | Layer                 | Technologies Used                             | Description                                                                                        |
 | :-------------------- | :-------------------------------------------- | :------------------------------------------------------------------------------------------------- |
-| **Frontend UI**       | **React 19**, **Vite 8**, **Tailwind CSS v4** | A highly interactive UI layer styled with the next-generation Tailwind engine.                     |
-| **Frontend Routing**  | **TanStack Router**                           | File-based routing with 100% type safety and automatic route code-generation.                      |
+| **Frontend UI**       | **Next.js 16**, **React 19**, **Tailwind CSS v4** | Full-stack React app using App Router and styled with Tailwind CSS v4.                             |
+| **UI Components**     | **@workspace/ui-core**                        | Shared shadcn component library providing accessible design system primitives.                     |
 | **Backend API**       | **Hono.js**                                   | Light, edge-ready, and ultra-fast web framework running on port `3007`.                            |
 | **Authentication**    | **Better Auth**                               | Client & Server SDKs for secure email/password auth, verification, reset flows, and social logins. |
 | **Database & ORM**    | **Drizzle ORM**, **PostgreSQL**               | Type-safe SQL queries, schemas, and live migration toolkit.                                        |
@@ -25,8 +25,8 @@ Orchestrated using **Turborepo** and powered by **Bun**, this template brings to
 ```mermaid
 graph TD
   subgraph ui ["UI & Frontend"]
-    react-tanstack-template["React Application (TanStack Router)"]
-    ui-components["@workspace/ui-components (Shared shadcn)"]
+    nextjs-app["Next.js 16 Application (nextjs-app)"]
+    ui-core["@workspace/ui-core (Shared shadcn UI Library)"]
     ui-clients["@workspace/ui-clients (Shared Hono RPC & Auth Clients)"]
   end
 
@@ -39,10 +39,11 @@ graph TD
     db["@workspace/db (Drizzle ORM & Postgres)"]
   end
 
-  react-tanstack-template -.-> db
+  nextjs-app -.-> db
   http-api --> db
   ui-clients -->|RPC & Auth Calls| http-api
-  react-tanstack-template -->|Imports Clients| ui-clients
+  nextjs-app -->|Imports Clients| ui-clients
+  nextjs-app -->|Imports UI Primitives| ui-core
 ```
 
 ### 📁 Project Structure
@@ -58,11 +59,12 @@ graph TD
 │   └── typescript-config/  # Shared TypeScript configurations
 ├── ui/
 │   ├── apps/
-│   │   └── react-app/      # Vite + React 19 Client SPA with TanStack Router (port 3000)
+│   │   └── nextjs-app/     # Next.js 16 Client & App Router app (port 3000)
 │   └── shared/
 │       ├── ui-clients/     # Shared type-safe API & Better Auth clients
-│       ├── ui-components/  # Shared UI components (Radix, Base UI, Lucide)
-│       ├── ui-core/        # Shared core styling & configs
+│       ├── ui-components/  # Shared UI components
+│       ├── ui-core/        # Shared core UI component primitives (shadcn) & styles
+│       ├── ui-store/       # Shared Zustand reactive state management
 │       └── ui-utils/       # Shared UI utility helpers
 ├── package.json            # Root workspace configuration
 └── turbo.json              # Turborepo task pipeline config
@@ -111,17 +113,12 @@ BETTER_AUTH_SECRET=your_generated_better_auth_secret  # Run: bunx --bun @better-
 BETTER_AUTH_URL=http://localhost:3000                 # URL of your frontend application
 ```
 
-#### For the Frontend Client (`ui/apps/react-app/`)
+#### For the Frontend Client (`ui/apps/nextjs-app/`)
 
-Copy `.env.local` configuration:
-
-```bash
-cp ui/apps/react-app/.env.local ui/apps/react-app/.env
-```
-
-Configure `BETTER_AUTH_SECRET` to match the backend's secret:
+Configure `.env.local` or environment variables:
 
 ```env
+NEXT_PUBLIC_API_URL=http://localhost:3007
 BETTER_AUTH_URL=http://localhost:3000
 BETTER_AUTH_SECRET=your_generated_better_auth_secret
 ```
@@ -144,13 +141,13 @@ bun --filter hono-api db:migrate
 
 ### 4. Run Development Servers
 
-Start both the frontend Vite development server and Hono.js API server concurrently:
+Start both the frontend Next.js development server and Hono.js API server concurrently:
 
 ```bash
 bun dev
 ```
 
-- **Frontend App** will run at `http://localhost:3000`
+- **Frontend Next.js App** will run at `http://localhost:3000`
 - **Hono.js Backend** will run at `http://localhost:3007`
 
 ---
@@ -187,15 +184,15 @@ This monorepo template achieves 100% end-to-end type safety directly from the Ho
    export type AppType = typeof routes;
    ```
 2. **Path Alias Type Compatibility**:
-   Imports inside `api/http-api` referenced by the exported `AppType` are structured as relative paths so they resolve natively inside consumer workspaces (like the React app) without any configuration mappings.
+   Imports inside `api/http-api` referenced by the exported `AppType` are structured as relative paths so they resolve natively inside consumer workspaces without any configuration mappings.
 3. **Type-Safe RPC Client**:
-   The shared package `@workspace/ui-clients` (`ui/shared/ui-clients/`) imports the `AppType` and initializes the client using Hono's `hc` inside `src/api-client.ts`:
+   The shared package `@workspace/ui-clients` (`ui/shared/ui-clients/`) imports the `AppType` and initializes the client using Hono's `hc`:
    ```typescript
    import { hc } from 'hono/client'
    import type { AppType } from 'hono-api'
-   export const api = hc<AppType>(import.meta.env.VITE_API_URL || 'http://localhost:3007')
+   export const api = hc<AppType>(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3007')
    ```
-   Consumer apps (like `react-app`) import the client directly:
+   Consumer apps (like `nextjs-app`) import the client directly:
    ```typescript
    import { api } from '@workspace/ui-clients'
    ```
@@ -210,7 +207,7 @@ To maintain code cleanliness, the repository enforces the following conventions:
 
 - **File Names**:
   - Components: **kebab-case** (e.g. `login-form.tsx`, `signup-form.tsx`)
-  - Routes (TanStack Router): **kebab-case** matching URL structure (e.g. `forgot-password.tsx`)
+  - App Router pages: **kebab-case** directory names matching URL structure (e.g. `app/forgot-password/page.tsx`)
   - DB Schemas: **kebab-case.schema.ts** (e.g. `auth.schema.ts`)
   - Configs & Utils: **kebab-case.ts** (e.g. `auth-client.ts`)
 - **React Components**: Always export components as **PascalCase** named exports:
@@ -219,8 +216,12 @@ To maintain code cleanliness, the repository enforces the following conventions:
     return <div>...</div>
   }
   ```
+- **UI Components**: Always import shadcn UI primitives directly from `@workspace/ui-core`:
+  ```typescript
+  import { Button, Card, Input } from '@workspace/ui-core'
+  ```
 - **Architecture Rules**:
-  - The React app is a client-only SPA. Do not import database schemas or connect to Postgres directly from the frontend workspace.
+  - The Next.js app handles frontend rendering and routing. Do not import database schemas or connect to Postgres directly from the frontend workspace.
   - The Hono.js API backend serves as the gateway to the Postgres DB via the shared `@workspace/db` package.
 
 ---

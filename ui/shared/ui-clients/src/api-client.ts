@@ -1,6 +1,15 @@
 import { hc } from 'hono/client'
 import type { AppType } from 'hono-api'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3007'
+const getApiUrl = () => {
+  if (typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL
+  }
+  if (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_API_URL) {
+    return (import.meta as any).env.VITE_API_URL
+  }
+  return 'http://localhost:3007'
+}
 
-export const api = hc<AppType>(API_URL)
+export const api = hc<AppType>(getApiUrl())
+

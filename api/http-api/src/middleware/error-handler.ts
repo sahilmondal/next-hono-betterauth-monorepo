@@ -1,4 +1,5 @@
-import { Context, type Next, type StatusCode } from "hono";
+import { Context, type Next } from "hono";
+import type { ContentfulStatusCode } from "hono/utils/http-status";
 import { logger } from "../config/logger";
 import { ApiError } from "../utils/errors";
 import { errorResponse } from "../utils/response";
@@ -22,7 +23,7 @@ export async function errorHandler(c: Context, next: Next) {
 
       logger.warn({ requestId, errors: formattedErrors }, "Validation error");
       return c.json(errorResponse(formattedErrors, "VALIDATION_ERROR"), {
-        status: 400 as StatusCode,
+        status: 400 as ContentfulStatusCode,
       });
     }
 
@@ -32,7 +33,7 @@ export async function errorHandler(c: Context, next: Next) {
         error.message,
       );
       return c.json(errorResponse(error.message, error.code), {
-        status: error.statusCode as StatusCode,
+        status: error.statusCode as ContentfulStatusCode,
       });
     }
 
@@ -42,13 +43,13 @@ export async function errorHandler(c: Context, next: Next) {
         "Unexpected error",
       );
       return c.json(errorResponse("Internal server error", "INTERNAL_ERROR"), {
-        status: 500 as StatusCode,
+        status: 500 as ContentfulStatusCode,
       });
     }
 
     logger.error({ requestId, error }, "Unknown error");
     return c.json(errorResponse("Internal server error", "INTERNAL_ERROR"), {
-      status: 500 as StatusCode,
+      status: 500 as ContentfulStatusCode,
     });
   }
 }
