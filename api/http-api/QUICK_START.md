@@ -130,17 +130,17 @@ api/http-api/
 
 Authentications are automatically caught and handled at `/auth/*` by Better Auth handler:
 
-| Endpoint | Method | Description |
-|---|---|---|
-| `/auth/sign-up-email` | POST | Sign up a new user using email & password |
-| `/auth/sign-in-email` | POST | Sign in an existing user |
-| `/auth/sign-out` | POST | Clear the session & sign out |
+| Endpoint              | Method | Description                               |
+| --------------------- | ------ | ----------------------------------------- |
+| `/auth/sign-up-email` | POST   | Sign up a new user using email & password |
+| `/auth/sign-in-email` | POST   | Sign in an existing user                  |
+| `/auth/sign-out`      | POST   | Clear the session & sign out              |
 
 ### User Endpoints (Chained RPC)
 
-| Endpoint | Method | Description |
-|---|---|---|
-| `/users/me` | GET | Returns the authenticated user session context |
+| Endpoint    | Method | Description                                    |
+| ----------- | ------ | ---------------------------------------------- |
+| `/users/me` | GET    | Returns the authenticated user session context |
 
 ---
 

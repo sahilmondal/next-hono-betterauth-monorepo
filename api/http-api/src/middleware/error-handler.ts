@@ -28,20 +28,14 @@ export async function errorHandler(c: Context, next: Next) {
     }
 
     if (error instanceof ApiError) {
-      logger.warn(
-        { requestId, statusCode: error.statusCode, code: error.code },
-        error.message,
-      );
+      logger.warn({ requestId, statusCode: error.statusCode, code: error.code }, error.message);
       return c.json(errorResponse(error.message, error.code), {
         status: error.statusCode as ContentfulStatusCode,
       });
     }
 
     if (error instanceof Error) {
-      logger.error(
-        { requestId, error: error.message, stack: error.stack },
-        "Unexpected error",
-      );
+      logger.error({ requestId, error: error.message, stack: error.stack }, "Unexpected error");
       return c.json(errorResponse("Internal server error", "INTERNAL_ERROR"), {
         status: 500 as ContentfulStatusCode,
       });

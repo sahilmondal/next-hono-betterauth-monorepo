@@ -34,9 +34,8 @@ app.use(compress());
 app.use(
   cors({
     origin:
-      env?.FRONTEND_ORIGINS?.split(",").map((origin: string) =>
-        origin.trim(),
-      ) || "http://localhost:3000",
+      env?.FRONTEND_ORIGINS?.split(",").map((origin: string) => origin.trim()) ||
+      "http://localhost:3000",
     allowHeaders: ["Content-Type", "Authorization"],
     allowMethods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
     exposeHeaders: ["Content-Length"],
@@ -60,7 +59,7 @@ app.use("*", async (c, next) => {
 });
 
 // Health check and API routes (chained for Hono RPC type extraction)
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// oxlint-disable-next-line typescript/no-unused-vars
 const routes = app
   .get("/health", (c) => {
     return c.json({

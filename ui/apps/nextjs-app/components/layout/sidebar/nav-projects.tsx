@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import React from 'react'
+import React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,24 +14,19 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from '@workspace/ui-core'
-import {
-  MoreHorizontalIcon,
-  FolderIcon,
-  ShareIcon,
-  Trash2Icon,
-} from 'lucide-react'
+} from "@workspace/ui-core";
+import { MoreHorizontalIcon, FolderIcon, ShareIcon, Trash2Icon } from "lucide-react";
 
 export function NavProjects({
   projects,
 }: {
   projects: {
-    name: string
-    url: string
-    icon: React.ReactNode
-  }[]
+    name: string;
+    url: string;
+    icon: React.ReactNode;
+  }[];
 }) {
-  const { isMobile } = useSidebar()
+  const { isMobile } = useSidebar();
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Projects</SidebarGroupLabel>
@@ -44,20 +39,15 @@ export function NavProjects({
             </SidebarMenuButton>
             <DropdownMenu>
               <DropdownMenuTrigger
-                render={
-                  <SidebarMenuAction
-                    showOnHover
-                    className="aria-expanded:bg-muted"
-                  />
-                }
+                render={<SidebarMenuAction showOnHover className="aria-expanded:bg-muted" />}
               >
                 <MoreHorizontalIcon />
                 <span className="sr-only">More</span>
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="w-48"
-                side={isMobile ? 'bottom' : 'right'}
-                align={isMobile ? 'end' : 'start'}
+                side={isMobile ? "bottom" : "right"}
+                align={isMobile ? "end" : "start"}
               >
                 <DropdownMenuItem>
                   <FolderIcon className="mr-2 size-4 text-muted-foreground" />
@@ -84,5 +74,5 @@ export function NavProjects({
         </SidebarMenuItem>
       </SidebarMenu>
     </SidebarGroup>
-  )
+  );
 }

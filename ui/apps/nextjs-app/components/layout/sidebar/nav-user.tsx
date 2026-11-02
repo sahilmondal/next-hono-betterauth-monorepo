@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import {
   Avatar,
@@ -15,9 +15,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from '@workspace/ui-core'
-import { authClient } from '@workspace/ui-clients'
-import { useRouter } from 'next/navigation'
+} from "@workspace/ui-core";
+import { authClient } from "@workspace/ui-clients";
+import { useRouter } from "next/navigation";
 import {
   ChevronsUpDownIcon,
   SparklesIcon,
@@ -25,45 +25,43 @@ import {
   CreditCardIcon,
   BellIcon,
   LogOutIcon,
-} from 'lucide-react'
+} from "lucide-react";
 
 export function NavUser({
   user,
 }: {
   user: {
-    name: string
-    email: string
-    avatar: string
-  }
+    name: string;
+    email: string;
+    avatar: string;
+  };
 }) {
-  const { isMobile } = useSidebar()
-  const router = useRouter()
+  const { isMobile } = useSidebar();
+  const router = useRouter();
 
   const handleSignOut = async () => {
     try {
-      await authClient.signOut()
-      router.push('/login')
+      await authClient.signOut();
+      router.push("/login");
     } catch (err) {
-      console.error('Sign out error:', err)
+      console.error("Sign out error:", err);
     }
-  }
+  };
 
   const initials = user.name
     ? user.name
-        .split(' ')
+        .split(" ")
         .map((n) => n[0])
-        .join('')
+        .join("")
         .toUpperCase()
-    : 'U'
+    : "U";
 
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger
-            render={
-              <SidebarMenuButton size="lg" className="aria-expanded:bg-muted" />
-            }
+            render={<SidebarMenuButton size="lg" className="aria-expanded:bg-muted" />}
           >
             <Avatar>
               <AvatarImage src={user.avatar} alt={user.name} />
@@ -77,7 +75,7 @@ export function NavUser({
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="min-w-56 rounded-lg"
-            side={isMobile ? 'bottom' : 'right'}
+            side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
           >
@@ -126,5 +124,5 @@ export function NavUser({
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  )
+  );
 }

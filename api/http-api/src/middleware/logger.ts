@@ -15,10 +15,7 @@ export async function loggerMiddleware(c: Context, next: Next) {
       method: c.req.method,
       path: c.req.path,
       userAgent: c.req.header("user-agent"),
-      ip:
-        c.req.header("x-forwarded-for") ||
-        c.req.header("cf-connecting-ip") ||
-        "unknown",
+      ip: c.req.header("x-forwarded-for") || c.req.header("cf-connecting-ip") || "unknown",
     },
     "Incoming request",
   );

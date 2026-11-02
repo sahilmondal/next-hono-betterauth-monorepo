@@ -1,23 +1,24 @@
-import Link from 'next/link'
-import { Button } from '@workspace/ui-core'
+import Link from "next/link";
+import { Button } from "@workspace/ui-core";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-6 bg-base dark:bg-background">
-      <main className="w-full max-w-4xl island-shell rounded-2xl p-8 md:p-12 flex flex-col items-center text-center gap-8 rise-in">
-        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs font-semibold tracking-wide text-primary uppercase">
+    <div className="bg-base flex min-h-screen flex-col items-center justify-center p-6 dark:bg-background">
+      <main className="island-shell rise-in flex w-full max-w-4xl flex-col items-center gap-8 rounded-2xl p-8 text-center md:p-12">
+        <div className="flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-semibold tracking-wide text-primary uppercase">
           🚀 Next.js 16 + Hono + Better Auth Monorepo
         </div>
 
-        <h1 className="display-title text-4xl md:text-6xl font-bold tracking-tight text-foreground">
+        <h1 className="display-title text-4xl font-bold tracking-tight text-foreground md:text-6xl">
           Production-Ready Full-Stack Template
         </h1>
 
-        <p className="max-w-2xl text-lg text-muted-foreground leading-relaxed">
-          Powered by Next.js 16 App Router, Hono.js API backend, Better Auth for authentication, Turborepo, and `@workspace/ui-core` shadcn design system.
+        <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
+          Powered by Next.js 16 App Router, Hono.js API backend, Better Auth for authentication,
+          Turborepo, and `@workspace/ui-core` shadcn design system.
         </p>
 
-        <div className="flex flex-wrap gap-4 justify-center items-center">
+        <div className="flex flex-wrap items-center justify-center gap-4">
           <Link href="/login">
             <Button size="lg" className="px-8 font-semibold">
               Sign In
@@ -35,24 +36,24 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mt-6 text-left">
-          <div className="feature-card p-5 rounded-xl border border-line flex flex-col gap-2">
+        <div className="mt-6 grid w-full grid-cols-1 gap-4 text-left md:grid-cols-3">
+          <div className="feature-card border-line flex flex-col gap-2 rounded-xl border p-5">
             <div className="text-xl">⚡</div>
-            <h3 className="font-bold text-base">Next.js 16 App Router</h3>
+            <h3 className="text-base font-bold">Next.js 16 App Router</h3>
             <p className="text-xs text-muted-foreground">
               Modern server & client architecture, zero-config optimized rendering.
             </p>
           </div>
-          <div className="feature-card p-5 rounded-xl border border-line flex flex-col gap-2">
+          <div className="feature-card border-line flex flex-col gap-2 rounded-xl border p-5">
             <div className="text-xl">🔥</div>
-            <h3 className="font-bold text-base">Hono RPC Safety</h3>
+            <h3 className="text-base font-bold">Hono RPC Safety</h3>
             <p className="text-xs text-muted-foreground">
               100% end-to-end type safety direct from Hono route definitions.
             </p>
           </div>
-          <div className="feature-card p-5 rounded-xl border border-line flex flex-col gap-2">
+          <div className="feature-card border-line flex flex-col gap-2 rounded-xl border p-5">
             <div className="text-xl">🛡️</div>
-            <h3 className="font-bold text-base">Better Auth</h3>
+            <h3 className="text-base font-bold">Better Auth</h3>
             <p className="text-xs text-muted-foreground">
               Email/Password, social OAuth, password resets, and session management.
             </p>
@@ -60,5 +61,5 @@ export default function Home() {
         </div>
       </main>
     </div>
-  )
+  );
 }

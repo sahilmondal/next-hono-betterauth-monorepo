@@ -29,7 +29,6 @@ ui-utils/
 │   └── index.ts         # Main entry point
 ├── package.json         # Workspace dependencies
 ├── tsconfig.json        # TypeScript configuration
-├── eslint.config.js     # ESLint configuration
 └── README.md            # Documentation
 ```
 
@@ -52,14 +51,8 @@ ui-utils/
 // Common utility functions
 export function cn(...classes: ClassValue[]): string;
 export function formatDate(date: Date, format?: string): string;
-export function debounce<T extends (...args: any[]) => any>(
-  func: T,
-  wait: number,
-): T;
-export function throttle<T extends (...args: any[]) => any>(
-  func: T,
-  wait: number,
-): T;
+export function debounce<T extends (...args: any[]) => any>(func: T, wait: number): T;
+export function throttle<T extends (...args: any[]) => any>(func: T, wait: number): T;
 export function classNames(...classes: any[]): string;
 ```
 
@@ -113,9 +106,9 @@ import { cn, formatDate } from "@workspace/ui-utils/helpers";
 
 // Conditional className
 const buttonClass = cn(
-  "px-4 py-2 rounded",
+  "rounded px-4 py-2",
   variant === "primary" && "bg-blue-500",
-  disabled && "opacity-50 cursor-not-allowed",
+  disabled && "cursor-not-allowed opacity-50",
 );
 
 // Format dates
@@ -220,8 +213,7 @@ export type LoginInput = z.infer<typeof loginSchema>;
 
 ```tsx
 // src/constants/api.ts
-export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3009";
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3009";
 
 export const API_ENDPOINTS = {
   AUTH: {
@@ -308,5 +300,4 @@ Utilities are exported via granular paths for optimal tree-shaking:
 
 - **@workspace/ui-components**: React components using these utilities
 - **@workspace/auth-client**: API client using these validators
-- **@workspace/eslint-config**: Shared ESLint rules
 - **@workspace/typescript-config**: Shared TypeScript configs

@@ -29,7 +29,6 @@ ui-components/
 │   └── index.ts         # Main entry point
 ├── package.json         # Workspace dependencies
 ├── tsconfig.json        # TypeScript configuration
-├── eslint.config.js     # ESLint configuration
 ├── postcss.config.mjs   # PostCSS/Tailwind config
 └── README.md            # Documentation
 ```
@@ -93,11 +92,7 @@ export interface ButtonProps
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, ...props }, ref) => (
-    <button
-      ref={ref}
-      className={cn(buttonVariants({ variant, className }))}
-      {...props}
-    />
+    <button ref={ref} className={cn(buttonVariants({ variant, className }))} {...props} />
   ),
 );
 ```
@@ -185,5 +180,4 @@ Components are exported via named exports and tree-shakeable paths:
 
 - **@workspace/ui-utils**: Utility functions and validators
 - **@workspace/ui-core**: Foundation components (legacy)
-- **@workspace/eslint-config**: Shared ESLint rules
 - **@workspace/typescript-config**: Shared TypeScript configs

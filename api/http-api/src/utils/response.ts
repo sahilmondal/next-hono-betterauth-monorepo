@@ -2,10 +2,7 @@ import type { Context } from "hono";
 import type { ContentfulStatusCode } from "hono/utils/http-status";
 import type { ApiResponse } from "../types";
 
-export function successResponse<T>(
-  data: T,
-  message = "Success",
- ): ApiResponse<T> {
+export function successResponse<T>(data: T, message = "Success"): ApiResponse<T> {
   return {
     success: true,
     data,
@@ -13,10 +10,7 @@ export function successResponse<T>(
   };
 }
 
-export function errorResponse(
-  error: string | object,
-  code = "INTERNAL_ERROR",
-): ApiResponse {
+export function errorResponse(error: string | object, code = "INTERNAL_ERROR"): ApiResponse {
   return {
     success: false,
     error,
@@ -24,12 +18,7 @@ export function errorResponse(
   };
 }
 
-export async function sendSuccess<T>(
-  c: Context,
-  data: T,
-  message = "Success",
-  statusCode = 200,
-) {
+export async function sendSuccess<T>(c: Context, data: T, message = "Success", statusCode = 200) {
   return c.json(successResponse(data, message), {
     status: statusCode as ContentfulStatusCode,
   });

@@ -1,8 +1,5 @@
 import { Context, type Next } from "hono";
-import {
-  RATE_LIMIT_MAX_REQUESTS,
-  RATE_LIMIT_WINDOW_MS,
-} from "../utils/constants";
+import { RATE_LIMIT_MAX_REQUESTS, RATE_LIMIT_WINDOW_MS } from "../utils/constants";
 import { ApiError } from "../utils/errors";
 
 interface RateLimitEntry {
@@ -23,10 +20,7 @@ setInterval(() => {
 }, RATE_LIMIT_WINDOW_MS);
 
 export async function rateLimitMiddleware(c: Context, next: Next) {
-  const ip =
-    c.req.header("x-forwarded-for") ||
-    c.req.header("cf-connecting-ip") ||
-    "unknown";
+  const ip = c.req.header("x-forwarded-for") || c.req.header("cf-connecting-ip") || "unknown";
   const now = Date.now();
 
   let entry = rateLimitMap.get(ip);
@@ -51,10 +45,7 @@ export async function rateLimitMiddleware(c: Context, next: Next) {
 
   // Add rate limit headers
   c.header("X-RateLimit-Limit", String(RATE_LIMIT_MAX_REQUESTS));
-  c.header(
-    "X-RateLimit-Remaining",
-    String(RATE_LIMIT_MAX_REQUESTS - entry.count),
-  );
+  c.header("X-RateLimit-Remaining", String(RATE_LIMIT_MAX_REQUESTS - entry.count));
   c.header("X-RateLimit-Reset", String(entry.resetTime));
 
   await next();

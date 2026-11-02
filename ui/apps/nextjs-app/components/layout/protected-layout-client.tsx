@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { authClient } from '@workspace/ui-clients'
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { authClient } from "@workspace/ui-clients";
 import {
   SidebarProvider,
   SidebarInset,
@@ -12,45 +12,39 @@ import {
   BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbPage,
-} from '@workspace/ui-core'
-import { AppSidebar } from '@/components/layout/sidebar/app-sidebar'
+} from "@workspace/ui-core";
+import { AppSidebar } from "@/components/layout/sidebar/app-sidebar";
 
-export function ProtectedLayoutClient({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  const { data: session, isPending } = authClient.useSession()
-  const router = useRouter()
+export function ProtectedLayoutClient({ children }: { children: React.ReactNode }) {
+  const { data: session, isPending } = authClient.useSession();
+  const router = useRouter();
 
   useEffect(() => {
     if (!isPending && !session) {
-      router.push('/login')
+      router.push("/login");
     }
-  }, [session, isPending, router])
+  }, [session, isPending, router]);
 
   if (isPending) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-base dark:bg-background">
+      <div className="bg-base flex min-h-screen items-center justify-center dark:bg-background">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-          <span className="text-sm font-medium text-muted-foreground">
-            Authenticating...
-          </span>
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+          <span className="text-sm font-medium text-muted-foreground">Authenticating...</span>
         </div>
       </div>
-    )
+    );
   }
 
   if (!session) {
-    return null
+    return null;
   }
 
   return (
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 border-line bg-card/50 backdrop-blur-sm transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+        <header className="border-line flex h-16 shrink-0 items-center gap-2 border-b bg-card/50 px-4 backdrop-blur-sm transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
@@ -65,10 +59,10 @@ export function ProtectedLayoutClient({
             </Breadcrumb>
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 md:p-6 bg-base dark:bg-background min-h-[calc(100vh-4rem)]">
+        <div className="bg-base flex min-h-[calc(100vh-4rem)] flex-1 flex-col gap-4 p-4 md:p-6 dark:bg-background">
           {children}
         </div>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }

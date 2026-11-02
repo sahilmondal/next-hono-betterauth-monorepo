@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   Button,
   Card,
@@ -15,37 +15,37 @@ import {
   FieldGroup,
   FieldLabel,
   Input,
-} from '@workspace/ui-core'
-import { authClient } from '@workspace/ui-clients'
+} from "@workspace/ui-core";
+import { authClient } from "@workspace/ui-clients";
 
 export default function ForgotPasswordPage() {
-  const [email, setEmail] = useState('')
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const router = useRouter()
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
     try {
       const { error: err } = await authClient.requestPasswordReset({
         email,
-        redirectTo: window.location.origin + '/reset-password',
-      })
+        redirectTo: window.location.origin + "/reset-password",
+      });
       if (err) {
-        setError(err.message || 'Failed to send reset email')
+        setError(err.message || "Failed to send reset email");
       } else {
-        setSuccess(true)
+        setSuccess(true);
       }
     } catch (err) {
-      setError('An unexpected error occurred. Please try again.')
-      console.error(err)
+      setError("An unexpected error occurred. Please try again.");
+      console.error(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <Card>
@@ -54,20 +54,16 @@ export default function ForgotPasswordPage() {
         <CardDescription>
           {success
             ? "If the email exists in our system, we've sent instructions."
-            : 'Enter your email address to receive a password reset link.'}
+            : "Enter your email address to receive a password reset link."}
         </CardDescription>
       </CardHeader>
       <CardContent>
         {success ? (
-          <div className="flex flex-col gap-4 mt-2">
-            <div className="p-3 text-sm text-green-500 rounded bg-green-50/10 border border-green-500/20 text-center">
-              Check your inbox at <strong>{email}</strong> for reset
-              instructions.
+          <div className="mt-2 flex flex-col gap-4">
+            <div className="rounded border border-green-500/20 bg-green-50/10 p-3 text-center text-sm text-green-500">
+              Check your inbox at <strong>{email}</strong> for reset instructions.
             </div>
-            <Button
-              onClick={() => router.push('/login')}
-              className="w-full"
-            >
+            <Button onClick={() => router.push("/login")} className="w-full">
               Return to Login
             </Button>
           </div>
@@ -75,7 +71,7 @@ export default function ForgotPasswordPage() {
           <form onSubmit={handleSubmit}>
             <FieldGroup>
               {error && (
-                <div className="p-3 text-sm text-red-500 rounded bg-red-50/10 border border-red-500/20">
+                <div className="rounded border border-red-500/20 bg-red-50/10 p-3 text-sm text-red-500">
                   {error}
                 </div>
               )}
@@ -92,10 +88,10 @@ export default function ForgotPasswordPage() {
               </Field>
               <Field>
                 <Button type="submit" disabled={loading} className="w-full">
-                  {loading ? 'Sending link...' : 'Send Reset Link'}
+                  {loading ? "Sending link..." : "Send Reset Link"}
                 </Button>
                 <FieldDescription className="text-center">
-                  Remember your password?{' '}
+                  Remember your password?{" "}
                   <Link href="/login" className="underline">
                     Back to Login
                   </Link>
@@ -106,5 +102,5 @@ export default function ForgotPasswordPage() {
         )}
       </CardContent>
     </Card>
-  )
+  );
 }

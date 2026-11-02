@@ -1,0 +1,12 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": false,
+  "ignorePatterns": ["**/dist/**", "**/.next/**", "**/node_modules/**", "bun.lock"],
+  "sortTailwindcss": {
+    "stylesheet": "./ui/apps/nextjs-app/app/globals.css",
+    "functions": ["cn", "clsx", "cva"]
+  }
+}

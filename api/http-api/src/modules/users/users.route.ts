@@ -8,13 +8,9 @@ export const updateUserSchema = z.object({
   avatar: z.string().url().optional(),
 });
 
-const usersRoute = new Hono<HonoContext>().get(
-  "/me",
-  authMiddleware,
-  async (c) => {
-    const user = c.get("user");
-    return c.json({ user });
-  },
-);
+const usersRoute = new Hono<HonoContext>().get("/me", authMiddleware, async (c) => {
+  const user = c.get("user");
+  return c.json({ user });
+});
 
 export default usersRoute;

@@ -442,14 +442,7 @@ export { Separator } from "./components/separator";
 **Usage in Apps**:
 
 ```typescript
-import {
-  Button,
-  Input,
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from "@workspace/ui-core";
+import { Button, Input, Card, CardHeader, CardTitle, CardContent } from "@workspace/ui-core";
 ```
 
 ## Component Patterns
@@ -543,7 +536,7 @@ export function cn(...inputs: ClassValue[]) {
 **DevDependencies**:
 
 - `tailwindcss`: 4.1.18 (for Tailwind class IntelliSense in IDE)
-- TypeScript, ESLint, Prettier
+- TypeScript, Oxlint, Oxfmt
 
 ## Component Development Workflow
 

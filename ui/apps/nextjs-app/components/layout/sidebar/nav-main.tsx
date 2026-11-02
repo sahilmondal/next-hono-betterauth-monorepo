@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import React from 'react'
+import React from "react";
 import {
   Collapsible,
   CollapsibleContent,
@@ -14,46 +14,37 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from '@workspace/ui-core'
-import { ChevronRightIcon } from 'lucide-react'
+} from "@workspace/ui-core";
+import { ChevronRightIcon } from "lucide-react";
 
 export function NavMain({
   items,
 }: {
   items: {
-    title: string
-    url: string
-    icon: React.ReactNode
-    isActive?: boolean
+    title: string;
+    url: string;
+    icon: React.ReactNode;
+    isActive?: boolean;
     items?: {
-      title: string
-      url: string
-    }[]
-  }[]
+      title: string;
+      url: string;
+    }[];
+  }[];
 }) {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
-          <Collapsible
-            key={item.title}
-            defaultOpen={item.isActive}
-            render={<SidebarMenuItem />}
-          >
-            <SidebarMenuButton
-              tooltip={item.title}
-              render={<a href={item.url} />}
-            >
+          <Collapsible key={item.title} defaultOpen={item.isActive} render={<SidebarMenuItem />}>
+            <SidebarMenuButton tooltip={item.title} render={<a href={item.url} />}>
               {item.icon}
               <span>{item.title}</span>
             </SidebarMenuButton>
             {item.items?.length ? (
               <>
                 <CollapsibleTrigger
-                  render={
-                    <SidebarMenuAction className="aria-expanded:rotate-90" />
-                  }
+                  render={<SidebarMenuAction className="aria-expanded:rotate-90" />}
                 >
                   <ChevronRightIcon />
                   <span className="sr-only">Toggle</span>
@@ -75,5 +66,5 @@ export function NavMain({
         ))}
       </SidebarMenu>
     </SidebarGroup>
-  )
+  );
 }

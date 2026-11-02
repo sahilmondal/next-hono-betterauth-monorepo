@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import { useState, Suspense } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Button,
   Card,
@@ -13,53 +13,53 @@ import {
   FieldGroup,
   FieldLabel,
   Input,
-} from '@workspace/ui-core'
-import { authClient } from '@workspace/ui-clients'
+} from "@workspace/ui-core";
+import { authClient } from "@workspace/ui-clients";
 
 function ResetPasswordForm() {
-  const searchParams = useSearchParams()
-  const token = searchParams.get('token') || undefined
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const router = useRouter()
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token") || undefined;
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match')
-      setLoading(false)
-      return
+      setError("Passwords do not match");
+      setLoading(false);
+      return;
     }
 
     if (!token) {
-      setError('Reset token is missing or invalid')
-      setLoading(false)
-      return
+      setError("Reset token is missing or invalid");
+      setLoading(false);
+      return;
     }
 
     try {
       const { error: err } = await authClient.resetPassword({
         newPassword: password,
         token,
-      })
+      });
       if (err) {
-        setError(err.message || 'Failed to reset password')
+        setError(err.message || "Failed to reset password");
       } else {
-        setSuccess(true)
+        setSuccess(true);
       }
     } catch (err) {
-      setError('An unexpected error occurred. Please try again.')
-      console.error(err)
+      setError("An unexpected error occurred. Please try again.");
+      console.error(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <Card>
@@ -67,30 +67,27 @@ function ResetPasswordForm() {
         <CardTitle className="text-xl">Reset Password</CardTitle>
         <CardDescription>
           {success
-            ? 'Your password has been successfully updated.'
-            : 'Enter your new password below.'}
+            ? "Your password has been successfully updated."
+            : "Enter your new password below."}
         </CardDescription>
       </CardHeader>
       <CardContent>
         {success ? (
-          <div className="flex flex-col gap-4 mt-2">
-            <div className="p-3 text-sm text-green-500 rounded bg-green-50/10 border border-green-500/20 text-center">
+          <div className="mt-2 flex flex-col gap-4">
+            <div className="rounded border border-green-500/20 bg-green-50/10 p-3 text-center text-sm text-green-500">
               Password updated! You can now log in with your new credentials.
             </div>
-            <Button
-              onClick={() => router.push('/login')}
-              className="w-full"
-            >
+            <Button onClick={() => router.push("/login")} className="w-full">
               Go to Login
             </Button>
           </div>
         ) : !token ? (
-          <div className="flex flex-col gap-4 mt-2">
-            <div className="p-3 text-sm text-red-500 rounded bg-red-50/10 border border-red-500/20 text-center">
+          <div className="mt-2 flex flex-col gap-4">
+            <div className="rounded border border-red-500/20 bg-red-50/10 p-3 text-center text-sm text-red-500">
               Invalid or expired password reset link. Please request a new link.
             </div>
             <Button
-              onClick={() => router.push('/forgot-password')}
+              onClick={() => router.push("/forgot-password")}
               className="w-full"
               variant="outline"
             >
@@ -101,7 +98,7 @@ function ResetPasswordForm() {
           <form onSubmit={handleSubmit}>
             <FieldGroup>
               {error && (
-                <div className="p-3 text-sm text-red-500 rounded bg-red-50/10 border border-red-500/20">
+                <div className="rounded border border-red-500/20 bg-red-50/10 p-3 text-sm text-red-500">
                   {error}
                 </div>
               )}
@@ -117,9 +114,7 @@ function ResetPasswordForm() {
                 />
               </Field>
               <Field>
-                <FieldLabel htmlFor="confirm-password">
-                  Confirm Password
-                </FieldLabel>
+                <FieldLabel htmlFor="confirm-password">Confirm Password</FieldLabel>
                 <Input
                   id="confirm-password"
                   type="password"
@@ -130,7 +125,7 @@ function ResetPasswordForm() {
               </Field>
               <Field>
                 <Button type="submit" disabled={loading} className="w-full">
-                  {loading ? 'Updating password...' : 'Update Password'}
+                  {loading ? "Updating password..." : "Update Password"}
                 </Button>
               </Field>
             </FieldGroup>
@@ -138,7 +133,7 @@ function ResetPasswordForm() {
         )}
       </CardContent>
     </Card>
-  )
+  );
 }
 
 export default function ResetPasswordPage() {
@@ -146,5 +141,5 @@ export default function ResetPasswordPage() {
     <Suspense fallback={<div className="text-center">Loading...</div>}>
       <ResetPasswordForm />
     </Suspense>
-  )
+  );
 }

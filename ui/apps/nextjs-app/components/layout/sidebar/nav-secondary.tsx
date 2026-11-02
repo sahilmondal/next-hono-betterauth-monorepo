@@ -1,23 +1,23 @@
-'use client'
+"use client";
 
-import React from 'react'
+import React from "react";
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@workspace/ui-core'
+} from "@workspace/ui-core";
 
 export function NavSecondary({
   items,
   ...props
 }: {
   items: {
-    title: string
-    url: string
-    icon: React.ReactNode
-  }[]
+    title: string;
+    url: string;
+    icon: React.ReactNode;
+  }[];
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
   return (
     <SidebarGroup {...props}>
@@ -34,5 +34,5 @@ export function NavSecondary({
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
-  )
+  );
 }

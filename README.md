@@ -8,15 +8,16 @@ Orchestrated using **Turborepo** and powered by **Bun**, this template brings to
 
 ## 🛠️ Tech Stack & Core Technologies
 
-| Layer                 | Technologies Used                             | Description                                                                                        |
-| :-------------------- | :-------------------------------------------- | :------------------------------------------------------------------------------------------------- |
-| **Frontend UI**       | **Next.js 16**, **React 19**, **Tailwind CSS v4** | Full-stack React app using App Router and styled with Tailwind CSS v4.                             |
-| **UI Components**     | **@workspace/ui-core**                        | Shared shadcn component library providing accessible design system primitives.                     |
-| **Backend API**       | **Hono.js**                                   | Light, edge-ready, and ultra-fast web framework running on port `3007`.                            |
-| **Authentication**    | **Better Auth**                               | Client & Server SDKs for secure email/password auth, verification, reset flows, and social logins. |
-| **Database & ORM**    | **Drizzle ORM**, **PostgreSQL**               | Type-safe SQL queries, schemas, and live migration toolkit.                                        |
-| **Client Type Safety**| **Hono RPC**                                  | Achieves end-to-end type safety directly from backend routes without code generation.              |
-| **Orchestration**     | **Turborepo**, **Bun**                        | Monorepo task pipeline management, execution caching, and fast package installation.               |
+| Layer                    | Technologies Used                                 | Description                                                                                        |
+| :----------------------- | :------------------------------------------------ | :------------------------------------------------------------------------------------------------- |
+| **Frontend UI**          | **Next.js 16**, **React 19**, **Tailwind CSS v4** | Full-stack React app using App Router and styled with Tailwind CSS v4.                             |
+| **UI Components**        | **@workspace/ui-core**                            | Shared shadcn component library providing accessible design system primitives.                     |
+| **Backend API**          | **Hono.js**                                       | Light, edge-ready, and ultra-fast web framework running on port `3007`.                            |
+| **Authentication**       | **Better Auth**                                   | Client & Server SDKs for secure email/password auth, verification, reset flows, and social logins. |
+| **Database & ORM**       | **Drizzle ORM**, **PostgreSQL**                   | Type-safe SQL queries, schemas, and live migration toolkit.                                        |
+| **Client Type Safety**   | **Hono RPC**                                      | Achieves end-to-end type safety directly from backend routes without code generation.              |
+| **Linting & Formatting** | **Oxlint**, **Oxfmt**                             | Blazing-fast Rust-based linter and Prettier-compatible formatter with native Tailwind CSS sorting. |
+| **Orchestration**        | **Turborepo**, **Bun**                            | Monorepo task pipeline management, execution caching, and fast package installation.               |
 
 ---
 
@@ -55,7 +56,6 @@ graph TD
 │   └── worker-api/         # Hono.js Worker application
 ├── packages/
 │   ├── db/                 # Shared database package with Drizzle schemas & connections
-│   ├── eslint-config/      # Global ESLint rules
 │   └── typescript-config/  # Shared TypeScript configurations
 ├── ui/
 │   ├── apps/
@@ -66,6 +66,8 @@ graph TD
 │       ├── ui-core/        # Shared core UI component primitives (shadcn) & styles
 │       ├── ui-store/       # Shared Zustand reactive state management
 │       └── ui-utils/       # Shared UI utility helpers
+├── .oxlintrc.json          # Global Oxlint configuration
+├── .oxfmtrc.json           # Global Oxfmt configuration
 ├── package.json            # Root workspace configuration
 └── turbo.json              # Turborepo task pipeline config
 ```
@@ -188,13 +190,13 @@ This monorepo template achieves 100% end-to-end type safety directly from the Ho
 3. **Type-Safe RPC Client**:
    The shared package `@workspace/ui-clients` (`ui/shared/ui-clients/`) imports the `AppType` and initializes the client using Hono's `hc`:
    ```typescript
-   import { hc } from 'hono/client'
-   import type { AppType } from 'hono-api'
-   export const api = hc<AppType>(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3007')
+   import { hc } from "hono/client";
+   import type { AppType } from "hono-api";
+   export const api = hc<AppType>(process.env.NEXT_PUBLIC_API_URL || "http://localhost:3007");
    ```
    Consumer apps (like `nextjs-app`) import the client directly:
    ```typescript
-   import { api } from '@workspace/ui-clients'
+   import { api } from "@workspace/ui-clients";
    ```
 4. **Autocomplete & Compile-Time Check**:
    Using `api` ensures complete autocomplete on request URL paths, HTTP query params, json request bodies, headers, and type safety on the return response schemas (e.g. `api.users.me.$get()`).
@@ -218,7 +220,7 @@ To maintain code cleanliness, the repository enforces the following conventions:
   ```
 - **UI Components**: Always import shadcn UI primitives directly from `@workspace/ui-core`:
   ```typescript
-  import { Button, Card, Input } from '@workspace/ui-core'
+  import { Button, Card, Input } from "@workspace/ui-core";
   ```
 - **Architecture Rules**:
   - The Next.js app handles frontend rendering and routing. Do not import database schemas or connect to Postgres directly from the frontend workspace.
@@ -228,14 +230,15 @@ To maintain code cleanliness, the repository enforces the following conventions:
 
 ## 📚 Scripts Reference
 
-| Command                                | Target   | Description                                                |
-| :------------------------------------- | :------- | :--------------------------------------------------------- |
-| `bun dev`                              | Root     | Starts all apps in development mode concurrently.          |
-| `bun build`                            | Root     | Compiles all workspaces for production.                    |
-| `bun lint`                             | Root     | Runs ESLint analysis across the repository.                |
-| `bun format`                           | Root     | Formats the codebase using Prettier.                       |
-| `bun check-types`                      | Root     | Validates TypeScript types across the monorepo.            |
-| `bun --filter @workspace/db db:studio` | Database | Opens Drizzle Studio to explore database records visually. |
+| Command                                | Target   | Description                                                        |
+| :------------------------------------- | :------- | :----------------------------------------------------------------- |
+| `bun dev`                              | Root     | Starts all apps in development mode concurrently.                  |
+| `bun build`                            | Root     | Compiles all workspaces for production.                            |
+| `bun lint`                             | Root     | Runs blazing-fast Oxlint analysis across the repository.           |
+| `bun format`                           | Root     | Formats the codebase using Oxfmt with native Tailwind CSS sorting. |
+| `bun format:check`                     | Root     | Checks formatting across the codebase using Oxfmt.                 |
+| `bun check-types`                      | Root     | Validates TypeScript types across the monorepo.                    |
+| `bun --filter @workspace/db db:studio` | Database | Opens Drizzle Studio to explore database records visually.         |
 
 ---
 

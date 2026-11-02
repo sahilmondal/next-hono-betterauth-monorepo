@@ -1,11 +1,19 @@
 {
   "name": "@workspace/ui-core",
   "version": "0.0.0",
-  "type": "module",
   "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./components/*": "./src/components/*.tsx",
+    "./globals.css": "./src/styles/globals.css",
+    "./postcss.config": "./postcss.config.mjs",
+    "./lib/*": "./src/lib/*.ts",
+    "./hooks/*": "./src/hooks/*.ts"
+  },
   "scripts": {
-    "lint": "eslint",
-    "format": "prettier --write \"**/*.{ts,tsx}\"",
+    "lint": "oxlint",
+    "format": "oxfmt",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -41,22 +49,12 @@
     "@types/node": "^25.1.0",
     "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",
-    "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
-    "eslint": "^9.39.2",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
-  },
-  "exports": {
-    ".": "./src/index.ts",
-    "./components/*": "./src/components/*.tsx",
-    "./globals.css": "./src/styles/globals.css",
-    "./postcss.config": "./postcss.config.mjs",
-    "./lib/*": "./src/lib/*.ts",
-    "./hooks/*": "./src/hooks/*.ts"
   }
 }

@@ -11,13 +11,13 @@ Provides 100% type safety for REST API endpoints utilizing Hono's RPC feature.
 #### Usage
 
 ```typescript
-import { api } from '@workspace/ui-clients'
+import { api } from "@workspace/ui-clients";
 
 // Fully typed query:
-const res = await api.users.me.$get()
+const res = await api.users.me.$get();
 if (res.ok) {
-  const data = await res.json()
-  console.log('User Profile:', data.user)
+  const data = await res.json();
+  console.log("User Profile:", data.user);
 }
 ```
 
@@ -28,13 +28,13 @@ Configured Better Auth client instance for managing session state, logins, and l
 #### Usage
 
 ```typescript
-import { authClient } from '@workspace/ui-clients'
+import { authClient } from "@workspace/ui-clients";
 
 // Check session:
-const { data: session, isPending } = authClient.useSession()
+const { data: session, isPending } = authClient.useSession();
 
 // Sign out:
-await authClient.signOut()
+await authClient.signOut();
 ```
 
 ---

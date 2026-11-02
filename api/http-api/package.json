@@ -1,34 +1,32 @@
 {
   "name": "hono-api",
   "version": "1.0.0",
-  "type": "module",
   "description": "Production-ready Hono.js API with PostgreSQL and Drizzle ORM",
+  "type": "module",
   "exports": {
     ".": "./src/main.ts"
   },
-  "packageManager": "bun",
   "scripts": {
     "dev": "bun run --hot src/main.ts",
     "build": "bun build src/main.ts --outfile dist/main.js --target=bun",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint . --max-warnings=0"
+    "lint": "oxlint"
   },
   "dependencies": {
+    "@workspace/db": "workspace:*",
     "better-auth": "^1.6.11",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.40.0",
     "hono": "^4.12.21",
     "pino": "^8.21.0",
     "pino-pretty": "^10.3.1",
-    "zod": "^3.25.76",
-    "@workspace/db": "workspace:*"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@types/bun": "^1.3.14",
     "@types/pg": "^8.20.0",
-    "@workspace/eslint-config": "workspace:*",
-    "eslint": "^9.39.2",
     "tsx": "^4.22.3",
     "typescript": "^5.9.3"
-  }
+  },
+  "packageManager": "bun"
 }

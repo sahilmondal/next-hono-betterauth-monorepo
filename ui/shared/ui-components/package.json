@@ -1,12 +1,20 @@
 {
   "name": "@workspace/ui-components",
   "version": "0.0.0",
-  "type": "module",
   "private": true,
   "description": "Reusable React/Next.js UI components built with Tailwind CSS",
+  "files": [
+    "src/**"
+  ],
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./hooks": "./src/hooks/index.ts",
+    "./globals.css": "./src/styles/globals.css"
+  },
   "scripts": {
-    "lint": "eslint . --max-warnings=0",
-    "format": "prettier --write \"**/*.{ts,tsx,json,md}\"",
+    "lint": "oxlint",
+    "format": "oxfmt",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -30,31 +38,19 @@
     "vaul": "^1.1.2",
     "zod": "^3.25.76"
   },
-  "peerDependencies": {
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4"
-  },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",
     "@types/node": "^25.1.0",
     "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",
+    "@workspace/typescript-config": "workspace:*",
     "@workspace/ui-core": "workspace:*",
     "@workspace/ui-utils": "workspace:*",
-    "@workspace/typescript-config": "workspace:*",
-    "@workspace/eslint-config": "workspace:*",
-    "eslint": "^9.39.2",
-    "prettier": "^3.8.1",
-    "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
   },
-  "exports": {
-    ".": "./src/index.ts",
-    "./hooks": "./src/hooks/index.ts",
-    "./globals.css": "./src/styles/globals.css"
-  },
-  "files": [
-    "src/**"
-  ]
+  "peerDependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  }
 }

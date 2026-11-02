@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { cn } from '@/lib/utils'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 import {
   Button,
   Card,
@@ -16,31 +16,28 @@ import {
   FieldGroup,
   FieldLabel,
   Input,
-} from '@workspace/ui-core'
-import { authClient } from '@workspace/ui-clients'
+} from "@workspace/ui-core";
+import { authClient } from "@workspace/ui-clients";
 
-export function SignupForm({
-  className,
-  ...props
-}: React.ComponentProps<'div'>) {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const router = useRouter()
+export function SignupForm({ className, ...props }: React.ComponentProps<"div">) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match')
-      setLoading(false)
-      return
+      setError("Passwords do not match");
+      setLoading(false);
+      return;
     }
 
     try {
@@ -48,57 +45,53 @@ export function SignupForm({
         email,
         password,
         name,
-      })
+      });
 
       if (err) {
-        setError(err.message || 'Failed to sign up')
+        setError(err.message || "Failed to sign up");
       } else {
-        setSuccess(true)
+        setSuccess(true);
       }
     } catch (err) {
-      setError('An unexpected error occurred. Please try again.')
-      console.error(err)
+      setError("An unexpected error occurred. Please try again.");
+      console.error(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   if (success) {
     return (
-      <div className={cn('flex flex-col gap-6', className)} {...props}>
-        <Card className="text-center p-8">
+      <div className={cn("flex flex-col gap-6", className)} {...props}>
+        <Card className="p-8 text-center">
           <CardHeader>
             <CardTitle className="text-2xl">Check your email</CardTitle>
             <CardDescription className="mt-2 text-base">
-              We&apos;ve sent a verification link to{' '}
-              <strong className="text-foreground">{email}</strong>. Please
-              verify your email address to complete registration.
+              We&apos;ve sent a verification link to{" "}
+              <strong className="text-foreground">{email}</strong>. Please verify your email address
+              to complete registration.
             </CardDescription>
           </CardHeader>
           <CardContent className="mt-4">
-            <Button onClick={() => router.push('/login')}>
-              Back to Login
-            </Button>
+            <Button onClick={() => router.push("/login")}>Back to Login</Button>
           </CardContent>
         </Card>
       </div>
-    )
+    );
   }
 
   return (
-    <div className={cn('flex flex-col gap-6', className)} {...props}>
+    <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Create your account</CardTitle>
-          <CardDescription>
-            Enter your email below to create your account
-          </CardDescription>
+          <CardDescription>Enter your email below to create your account</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
             <FieldGroup>
               {error && (
-                <div className="p-3 text-sm text-red-500 rounded bg-red-50/10 border border-red-500/20">
+                <div className="rounded border border-red-500/20 bg-red-50/10 p-3 text-sm text-red-500">
                   {error}
                 </div>
               )}
@@ -137,9 +130,7 @@ export function SignupForm({
                     />
                   </Field>
                   <Field>
-                    <FieldLabel htmlFor="confirm-password">
-                      Confirm Password
-                    </FieldLabel>
+                    <FieldLabel htmlFor="confirm-password">Confirm Password</FieldLabel>
                     <Input
                       id="confirm-password"
                       type="password"
@@ -149,16 +140,14 @@ export function SignupForm({
                     />
                   </Field>
                 </Field>
-                <FieldDescription>
-                  Must be at least 8 characters long.
-                </FieldDescription>
+                <FieldDescription>Must be at least 8 characters long.</FieldDescription>
               </Field>
               <Field>
                 <Button type="submit" disabled={loading}>
-                  {loading ? 'Creating Account...' : 'Create Account'}
+                  {loading ? "Creating Account..." : "Create Account"}
                 </Button>
                 <FieldDescription className="text-center">
-                  Already have an account?{' '}
+                  Already have an account?{" "}
                   <Link href="/login" className="underline">
                     Sign in
                   </Link>
@@ -169,9 +158,9 @@ export function SignupForm({
         </CardContent>
       </Card>
       <FieldDescription className="px-6 text-center">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{' '}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our <a href="#">Terms of Service</a> and{" "}
+        <a href="#">Privacy Policy</a>.
       </FieldDescription>
     </div>
-  )
+  );
 }

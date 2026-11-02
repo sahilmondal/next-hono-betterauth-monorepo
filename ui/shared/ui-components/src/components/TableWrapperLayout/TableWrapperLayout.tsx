@@ -112,10 +112,7 @@ function PaginationBar({
       {/* Rows per page */}
       <div className="flex items-center gap-2">
         <span className="text-sm text-neutral-500">Rows per page:</span>
-        <Select
-          value={String(pageSize)}
-          onValueChange={(val) => onPageSizeChange(Number(val))}
-        >
+        <Select value={String(pageSize)} onValueChange={(val) => onPageSizeChange(Number(val))}>
           <SelectTrigger className="h-8 w-[72px] text-sm">
             <SelectValue />
           </SelectTrigger>
@@ -130,7 +127,7 @@ function PaginationBar({
       </div>
 
       {/* Page info */}
-      <span className="text-sm tabular-nums text-neutral-500">
+      <span className="text-sm text-neutral-500 tabular-nums">
         Page {page} of {totalPages}
       </span>
 
@@ -196,8 +193,7 @@ export function TableWrapperLayout<TData>({
       sorting: sorting ?? [],
     },
     onSortingChange: (updater) => {
-      const newSorting =
-        typeof updater === "function" ? updater(sorting ?? []) : updater;
+      const newSorting = typeof updater === "function" ? updater(sorting ?? []) : updater;
       onSortingChange?.(newSorting);
     },
     getCoreRowModel: getCoreRowModel(),
@@ -213,9 +209,7 @@ export function TableWrapperLayout<TData>({
   return (
     <div className="overflow-hidden rounded-lg border border-border bg-background">
       {/* Toolbar */}
-      {toolbar && (
-        <div className="border-b border-border px-4 py-3">{toolbar}</div>
-      )}
+      {toolbar && <div className="border-b border-border px-4 py-3">{toolbar}</div>}
 
       {/* Table */}
       <div className="overflow-x-auto">
@@ -252,9 +246,7 @@ export function TableWrapperLayout<TData>({
             {isEmpty && emptyState && (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-full p-0">
-                  <div className="flex min-h-[320px] items-center justify-center">
-                    {emptyState}
-                  </div>
+                  <div className="flex min-h-[320px] items-center justify-center">{emptyState}</div>
                 </TableCell>
               </TableRow>
             )}
@@ -263,10 +255,7 @@ export function TableWrapperLayout<TData>({
             {!isLoading && !isEmpty && (
               <>
                 {rowModel.rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
+                  <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
                         {cell.getContext().renderValue() as React.ReactNode}
